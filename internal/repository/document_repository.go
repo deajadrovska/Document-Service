@@ -1,0 +1,47 @@
+package repository
+
+import (
+	"Document-Service/internal/model"
+	"errors"
+)
+
+type DocumentRepository struct {
+	documents []model.Document
+}
+
+func NewDocumentRepository() *DocumentRepository {
+	return &DocumentRepository{
+		documents: []model.Document{
+			{ID: "1", Name: "Document One", Description: "description"},
+			{ID: "2", Name: "Document Two", Description: "description"},
+			{ID: "3", Name: "Document Three", Description: "description"},
+		},
+	}
+}
+
+func (r *DocumentRepository) FindAll() []model.Document {
+	return r.documents
+}
+
+func (r *DocumentRepository) FindByID(id string) (*model.Document, error) {
+	for i, doc := range r.documents {
+		if doc.ID == id {
+			return &r.documents[i], nil
+		}
+	}
+	return nil, errors.New("document not found")
+}
+
+func (r *DocumentRepository) Save(document model.Document) {
+	r.documents = append(r.documents, document)
+}
+
+func (r *DocumentRepository) Delete(id string) error {
+	for i, doc := range r.documents {
+		if doc.ID == id {
+			r.documents = append(r.documents[:i], r.documents[i+1:]...)
+			return nil
+		}
+	}
+	return errors.New("document not found")
+}
