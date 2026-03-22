@@ -19,7 +19,7 @@ func (s *DocumentService) GetAll() []model.Document {
 }
 
 func (s *DocumentService) GetByID(id string) (*model.Document, error) {
-	if id == " " {
+	if id == "" {
 		return nil, errors.New("invalid document id")
 	}
 
