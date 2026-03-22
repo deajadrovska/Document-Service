@@ -1,0 +1,14 @@
+# Binaries
+*.exe
+*.out
+main
+
+# Go
+vendor/
+
+# IDE
+.idea/
+*.iml
+
+# Docker
+*.env
