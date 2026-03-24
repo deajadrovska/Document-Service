@@ -19,7 +19,7 @@ func main() {
 	router.POST("/documents", h.AddDocument)
 	router.DELETE("/documents/:id", h.DeleteDocument)
 
-	err := router.Run(":7070")
+	err := router.Run(":9191")
 	if err != nil {
 		return
 	}
