@@ -42,6 +42,10 @@ func (handler *DocumentHandler) AddDocument(context *gin.Context) {
 
 	added, err := handler.service.Add(newDocument)
 	if err != nil {
+		if err.Error() == "Document already exists" {
+			context.IndentedJSON(http.StatusConflict, gin.H{"message": err.Error()})
+			return
+		}
 		context.IndentedJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
 	}
@@ -54,7 +58,7 @@ func (handler *DocumentHandler) DeleteDocument(context *gin.Context) {
 
 	err := handler.service.Delete(id)
 	if err != nil {
-		context.IndentedJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		context.IndentedJSON(http.StatusNotFound, gin.H{"message": err.Error()})
 		return
 	}
 
